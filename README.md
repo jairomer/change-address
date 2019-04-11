@@ -1,4 +1,4 @@
-# change-address.sh
+# change-address
 
 A linux bash script to randomly generate and set a MAC address on the 
 indicated network interface.
