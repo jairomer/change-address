@@ -13,9 +13,6 @@
 # Optionally, you can indicate a specific MAC address as second parameter.
 #
 
-# Globals
-mac=''          # Empty mac Address
-
 # countdown $1: 	Starts a countdown.
 # Paramenter: 		Time in seconds
 function countdown {
@@ -28,9 +25,8 @@ function countdown {
 	done
 }
 
-# generateHexVal:
-# Arguments : None, but requires shell with $RANDOM
-# Results : 'hex' Global variable
+# generateHexVal : Generate/Print a random hexadecimal value. 
+# Arguments : None, but requires shell with $RANDOM enabled.
 function generateHexVal {
     rand=$(echo $RANDOM % 16 | bc)
     case "$rand" in
@@ -51,11 +47,10 @@ function generateHexVal {
 		esac
 }
 
-# generateRandomMac
+# generateRandomMac : Assemble/Print a random MAC address
 # Arguments : None
-# Results : 'mac' Global variable
 function generateRandomMac {
-	let sep=0			# Separator loop.
+	let sep=0		# Separator loop.
 	let field=1		# Field loop.
 	mac=""	  		# MAC address.
 	# A mac address is composed of 6 fiealds, 2 values each.
@@ -67,11 +62,9 @@ function generateRandomMac {
 		while [ $sep -lt 2 ]
 		do
 			let sep=sep+1
-			# Modify global variable 'hex' to get a random hexadecimal number.
+			# Get a random hexadecimal number.
 			hex="$(generateHexVal)"
-			#echo $hex
 			mac="$mac$hex"
-			#echo $mac
 		done
 
 		let sep=0
@@ -94,8 +87,6 @@ function generateRandomMac {
 # we need to be root, ask for permissions.
 if [ $EUID -ne 0 ]
 then
-#	SCRIPT_PATH="$( cd "$(dirname $0)" ; pwd -P )"
-#	sudo bash $SCRIPT_PATH/change-mac.sh $1 $2
 	sudo bash $0 $1 $2
 	exit
 fi
